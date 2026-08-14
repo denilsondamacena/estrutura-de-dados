@@ -1,2 +1,13 @@
-# estrutura-de-dados
-Exercícios de Estrutura de Dados desenvolvidos em Java, utilizados pelo Prof. Wellington Pinto de Oliveira no curso de Análise e Desenvolvimento de Sistemas, 3º semestre, da FATEC Zona Leste, em 2026.
+<p align="center">
+  <img src="https://ultimateqa.com/wp-content/uploads/2020/12/Java-logo-icon-1.png"
+       alt="Java Logo"
+       width="200"
+       height="150">
+</p>
+
+
+## Exercícios em Java
+
+Nesta pasta ficam reunidas as resoluções dos exercícios propostos nas aulas do **Prof. Wellington Pinto de Oliveira**, desenvolvidos em Java.
+
+> ⏳ **Status:** Os exercícios serão publicados ao final do semestre.

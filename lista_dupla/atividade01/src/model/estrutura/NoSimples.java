@@ -1,27 +1,27 @@
 package model.estrutura;
 
-public class NoSimples {
-    private String nome;
-    private NoSimples proximo;
+public class NoSimples<T> {
+    private T valor;
+    private NoSimples<T> proximo;
 
-    public NoSimples(String nome) {
-        this.nome = nome;
+    public NoSimples(T valor) {
+        this.valor = valor;
         this.proximo = null;
     }
 
-    public String getNome() {
-        return nome;
+    public T getValor() {
+        return valor;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setValor(T valor) {
+        this.valor = valor;
     }
 
-    public NoSimples getProximo() {
+    public NoSimples<T> getProximo() {
         return proximo;
     }
 
-    public void setProximo(NoSimples proximo) {
+    public void setProximo(NoSimples<T> proximo) {
         this.proximo = proximo;
     }
 }

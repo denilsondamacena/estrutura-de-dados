@@ -1,43 +1,47 @@
 package model.estrutura;
 
-public class NoDuplo {
-    private char letra;
-    private NoSimples inicioListaSimples;
-    private NoDuplo anterior;
-    private NoDuplo proximo;
+public class NoDuplo<T> {
+    private Character letra;
+    private NoSimples<T> inicioListaSimples;
+    private NoDuplo<T> anterior;
+    private NoDuplo<T> proximo;
 
-    public NoDuplo(char letra) {
+    public NoDuplo(Character letra) {
         this.letra = letra;
         this.inicioListaSimples = null;
         this.anterior = null;
         this.proximo = null;
     }
 
-    public char getLetra() {
+    public Character getLetra() {
         return letra;
     }
 
-    public NoSimples getInicioListaSimples() {
+    public void setLetra(Character letra) {
+        this.letra = letra;
+    }
+
+    public NoSimples<T> getInicioListaSimples() {
         return inicioListaSimples;
     }
 
-    public void setInicioListaSimples(NoSimples inicioListaSimples) {
+    public void setInicioListaSimples(NoSimples<T> inicioListaSimples) {
         this.inicioListaSimples = inicioListaSimples;
     }
 
-    public NoDuplo getAnterior() {
+    public NoDuplo<T> getAnterior() {
         return anterior;
     }
 
-    public void setAnterior(NoDuplo anterior) {
+    public void setAnterior(NoDuplo<T> anterior) {
         this.anterior = anterior;
     }
 
-    public NoDuplo getProximo() {
+    public NoDuplo<T> getProximo() {
         return proximo;
     }
 
-    public void setProximo(NoDuplo proximo) {
+    public void setProximo(NoDuplo<T> proximo) {
         this.proximo = proximo;
     }
 }

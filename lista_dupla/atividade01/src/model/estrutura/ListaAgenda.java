@@ -1,25 +1,27 @@
 package model.estrutura;
 
-public class ListaAgenda {
-    private NoDuplo inicio;
+public class ListaAgenda<T> {
+    private NoDuplo<T> inicio;
 
     public ListaAgenda() {
         this.inicio = null;
     }
 
-    public void adicionar(String nome) {
-        if (nome == null || nome.trim().isEmpty()) return;
-
-        nome = nome.trim();
-        char letra = Character.toUpperCase(nome.charAt(0));
-
-        NoDuplo noLetra = obterOuCriarNoDuplo(letra);
-        noLetra.setInicioListaSimples(inserirOrdenadoSimples(noLetra.getInicioListaSimples(), nome));
+    private char extrairLetra(T elemento) {
+        return Character.toUpperCase(elemento.toString().trim().charAt(0));
     }
 
-    private NoDuplo obterOuCriarNoDuplo(char letra) {
-        NoDuplo atual = inicio;
-        NoDuplo anterior = null;
+    public void adicionar(T elemento) {
+        if (elemento == null || elemento.toString().trim().isEmpty()) return;
+
+        char letra = extrairLetra(elemento);
+        NoDuplo<T> noLetra = obterOuCriarNoDuplo(letra);
+        noLetra.setInicioListaSimples(inserirOrdenadoSimples(noLetra.getInicioListaSimples(), elemento));
+    }
+
+    private NoDuplo<T> obterOuCriarNoDuplo(char letra) {
+        NoDuplo<T> atual = inicio;
+        NoDuplo<T> anterior = null;
 
         while (atual != null && atual.getLetra() < letra) {
             anterior = atual;
@@ -30,7 +32,7 @@ public class ListaAgenda {
             return atual;
         }
 
-        NoDuplo novo = new NoDuplo(letra);
+        NoDuplo<T> novo = new NoDuplo<>(letra);
 
         if (anterior == null) {
             novo.setProximo(inicio);
@@ -50,16 +52,17 @@ public class ListaAgenda {
         return novo;
     }
 
-    private NoSimples inserirOrdenadoSimples(NoSimples cabeca, String nome) {
-        NoSimples novo = new NoSimples(nome);
+    private NoSimples<T> inserirOrdenadoSimples(NoSimples<T> cabeca, T elemento) {
+        NoSimples<T> novo = new NoSimples<>(elemento);
 
-        if (cabeca == null || nome.compareToIgnoreCase(cabeca.getNome()) < 0) {
+        if (cabeca == null || elemento.toString().compareToIgnoreCase(cabeca.getValor().toString()) < 0) {
             novo.setProximo(cabeca);
             return novo;
         }
 
-        NoSimples atual = cabeca;
-        while (atual.getProximo() != null && atual.getProximo().getNome().compareToIgnoreCase(nome) < 0) {
+        NoSimples<T> atual = cabeca;
+        while (atual.getProximo() != null && 
+               atual.getProximo().getValor().toString().compareToIgnoreCase(elemento.toString()) < 0) {
             atual = atual.getProximo();
         }
 
@@ -68,12 +71,12 @@ public class ListaAgenda {
         return cabeca;
     }
 
-    public boolean localizar(String nome) {
-        if (nome == null || nome.trim().isEmpty()) return false;
+    public boolean localizar(T elemento) {
+        if (elemento == null || elemento.toString().trim().isEmpty()) return false;
 
-        char letra = Character.toUpperCase(nome.trim().charAt(0));
+        char letra = extrairLetra(elemento);
+        NoDuplo<T> atualDuplo = inicio;
 
-        NoDuplo atualDuplo = inicio;
         while (atualDuplo != null && atualDuplo.getLetra() < letra) {
             atualDuplo = atualDuplo.getProximo();
         }
@@ -82,9 +85,9 @@ public class ListaAgenda {
             return false;
         }
 
-        NoSimples atualSimples = atualDuplo.getInicioListaSimples();
+        NoSimples<T> atualSimples = atualDuplo.getInicioListaSimples();
         while (atualSimples != null) {
-            if (atualSimples.getNome().equalsIgnoreCase(nome.trim())) {
+            if (atualSimples.getValor().toString().equalsIgnoreCase(elemento.toString().trim())) {
                 return true;
             }
             atualSimples = atualSimples.getProximo();
@@ -93,12 +96,12 @@ public class ListaAgenda {
         return false;
     }
 
-    public boolean remover(String nome) {
-        if (nome == null || nome.trim().isEmpty()) return false;
+    public boolean remover(T elemento) {
+        if (elemento == null || elemento.toString().trim().isEmpty()) return false;
 
-        char letra = Character.toUpperCase(nome.trim().charAt(0));
+        char letra = extrairLetra(elemento);
+        NoDuplo<T> noLetra = inicio;
 
-        NoDuplo noLetra = inicio;
         while (noLetra != null && noLetra.getLetra() < letra) {
             noLetra = noLetra.getProximo();
         }
@@ -107,12 +110,12 @@ public class ListaAgenda {
             return false;
         }
 
-        NoSimples atualSimples = noLetra.getInicioListaSimples();
-        NoSimples anteriorSimples = null;
+        NoSimples<T> atualSimples = noLetra.getInicioListaSimples();
+        NoSimples<T> anteriorSimples = null;
         boolean encontrado = false;
 
         while (atualSimples != null) {
-            if (atualSimples.getNome().equalsIgnoreCase(nome.trim())) {
+            if (atualSimples.getValor().toString().equalsIgnoreCase(elemento.toString().trim())) {
                 encontrado = true;
                 if (anteriorSimples == null) {
                     noLetra.setInicioListaSimples(atualSimples.getProximo());
@@ -134,7 +137,7 @@ public class ListaAgenda {
         return true;
     }
 
-    private void removerNoDuplo(NoDuplo no) {
+    private void removerNoDuplo(NoDuplo<T> no) {
         if (no.getAnterior() != null) {
             no.getAnterior().setProximo(no.getProximo());
         } else {
@@ -155,12 +158,12 @@ public class ListaAgenda {
             return;
         }
 
-        NoDuplo atualDuplo = inicio;
+        NoDuplo<T> atualDuplo = inicio;
         while (atualDuplo != null) {
             System.out.print("[ Letra " + atualDuplo.getLetra() + " ] -> ");
-            NoSimples atualSimples = atualDuplo.getInicioListaSimples();
+            NoSimples<T> atualSimples = atualDuplo.getInicioListaSimples();
             while (atualSimples != null) {
-                System.out.print(atualSimples.getNome() + (atualSimples.getProximo() != null ? " -> " : " -> [null]"));
+                System.out.print(atualSimples.getValor() + (atualSimples.getProximo() != null ? " -> " : " -> [null]"));
                 atualSimples = atualSimples.getProximo();
             }
             System.out.println();

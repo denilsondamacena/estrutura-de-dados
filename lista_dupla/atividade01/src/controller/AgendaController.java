@@ -3,10 +3,10 @@ package controller;
 import model.estrutura.ListaAgenda;
 
 public class AgendaController {
-    private ListaAgenda listaAgenda;
+    private ListaAgenda<String> listaAgenda;
 
     public AgendaController() {
-        this.listaAgenda = new ListaAgenda();
+        this.listaAgenda = new ListaAgenda<>();
     }
 
     public void adicionarPessoa(String nome) {

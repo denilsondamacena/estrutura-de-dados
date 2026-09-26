@@ -16,7 +16,7 @@ public class ExpressaoPosFixada {
                 Double a = pilha.pop();
 
                 if (a == null || b == null) {
-                    throw new IllegalStateException("Expressão malformada: faltam operandos para o operador '" + token + "'.");
+                    throw new IllegalStateException("Expressão malformada: operandos insuficientes para o operador '" + token + "'.");
                 }
 
                 double resultado = executarOperacao(a, b, token);
@@ -37,7 +37,7 @@ public class ExpressaoPosFixada {
         }
 
         if (pilha.pop() != null) {
-            throw new IllegalStateException("Expressão malformada: operandos em excesso.");
+            throw new IllegalStateException("Expressão malformada: excesso de operandos.");
         }
 
         return resultadoFinal;
